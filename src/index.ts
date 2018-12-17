@@ -5,17 +5,20 @@ import { join, resolve } from 'path';
  * @param next 
  */
 export async function router(ctx: any, next: Function) {
+    // await timeout(5000)
     try {
         if (ctx.config && ctx.config.sendFile) {
             await ctx.config.getStaticFile();
         } else {
+            // await timeout
             await check(ctx);
-            await controller(ctx)
+            ctx.body = await controller(ctx)
         }
     } catch (error) {
         ctx.error = error;
     }
-    next()
+    // ctx.body = "a"
+    await next()
 }
 /**
  * 执行检查逻辑
@@ -59,14 +62,14 @@ export async function controller(ctx: any) {
         throw new Error("Not Found")
     }
     let co = new c(ctx)
-    ctx.body = {};
+    let d = {};
     if (co['_before_' + route.Method] instanceof Function) {
         co['_before_' + route.Method](ctx.req.body, ctx)
     }
     if (co[route.Method] instanceof Function) {
-        ctx.body = await co[route.Method](ctx.req.body, ctx)
+        d = await co[route.Method](ctx.req.body, ctx)
     } else if (co['__call'] instanceof Function) {
-        ctx.body = co['__call'](ctx.req.body, ctx)
+        d = co['__call'](ctx.req.body, ctx)
     } else {
         ctx.status = 404;
         throw new Error("Not Found")
@@ -74,6 +77,7 @@ export async function controller(ctx: any) {
     if (co['_after_' + route.Method] instanceof Function) {
         co['_after_' + route.Method](ctx.req.body, ctx)
     }
+    return d;
 }
 /**
  * 配置route
@@ -86,7 +90,7 @@ export async function config_route(ctx: any, next: Function) {
         Method: "",
         Controller: "",
     };
-    next()
+    await next()
 }
 /**
  * 获取控制器实例
@@ -116,14 +120,6 @@ export async function get_check_controller(ctx: any, Module: string, Controller:
  */
 // export async function
 export function install(that: any, koa: any, config: any) {
-    that.watch([
-        'dist/**/*.js'
-    ], [1, 2], (d: string) => {
-        if (require.cache[resolve(d)]) {
-            console.log(`File ${d} changed,deleted cache`)
-            delete require.cache[resolve(d)]
-        }
-    })
     koa.use(config_route);
     // koa.use();
     koa.use(router);
