@@ -6,16 +6,18 @@ import { join, resolve } from 'path';
  */
 export async function router(ctx: any, next: Function) {
     // await timeout(5000)
-    try {
-        if (ctx.config && ctx.config.sendFile) {
-            await ctx.config.getStaticFile();
-        } else {
-            // await timeout
-            await check(ctx);
-            ctx.body = await controller(ctx)
+    if ('OPTIONS' != ctx.method) {
+        try {
+            if (ctx.config && ctx.config.sendFile) {
+                await ctx.config.getStaticFile();
+            } else {
+                // await timeout
+                await check(ctx);
+                ctx.body = await controller(ctx)
+            }
+        } catch (error) {
+            ctx.error = error;
         }
-    } catch (error) {
-        ctx.error = error;
     }
     // ctx.body = "a"
     await next()
