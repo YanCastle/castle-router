@@ -65,19 +65,20 @@ export async function controller(ctx: any) {
     }
     let co = new c(ctx)
     let d = {};
+    let body = Object.assign(ctx.req.body || {}, ctx.request.body || {})
     if (co['_before_' + route.Method] instanceof Function) {
-        co['_before_' + route.Method](ctx.request.body, ctx)
+        co['_before_' + route.Method](body, ctx)
     }
     if (co[route.Method] instanceof Function) {
-        d = await co[route.Method](ctx.request.body, ctx)
+        d = await co[route.Method](body, ctx)
     } else if (co['__call'] instanceof Function) {
-        d = co['__call'](ctx.request.body, ctx)
+        d = co['__call'](body, ctx)
     } else {
         ctx.status = 404;
         throw new Error("Not Found")
     }
     if (co['_after_' + route.Method] instanceof Function) {
-        co['_after_' + route.Method](ctx.request.body, ctx)
+        co['_after_' + route.Method](body, ctx)
     }
     return d;
 }
