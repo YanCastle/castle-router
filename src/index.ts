@@ -56,7 +56,7 @@ export async function controller(ctx: any) {
     let c;
     try {
         //调用业务逻辑
-        c = await get_controller(ctx, '', route.Controller)
+        c = await get_controller(ctx, route)
     } catch (error) {
     }
     if (!c) {
@@ -86,27 +86,27 @@ export async function controller(ctx: any) {
     }
     return d;
 }
-/**
- * 配置route
- * @param ctx 
- * @param next 
- */
-export async function config_route(ctx: any, next: Function) {
-    ctx.route = ctx.config ? await ctx.config.getController() : {
-        Module: '',
-        Method: "",
-        Controller: "",
-    };
-    await next()
-}
+// /**
+//  * 配置route
+//  * @param ctx 
+//  * @param next 
+//  */
+// export async function config_route(ctx: any, next: Function) {
+//     ctx.route = ctx.config ? await ctx.config.getController() : {
+//         Module: '',
+//         Method: "",
+//         Controller: "",
+//     };
+//     await next()
+// }
 /**
  * 获取控制器实例
  * @param ctx 
  * @param Module 
  * @param Controller 
  */
-export async function get_controller(ctx: any, Module: string, Controller: string) {
-    let p = join(ctx.config ? await ctx.config.getAppPath() : 'dist', 'controller', Controller) + '.js';
+export async function get_controller(ctx: any, route: any) {
+    let p = join(ctx.config ? await ctx.config.getLibPath() : 'dist', 'controller', route.Controller) + '.js';
     return require(resolve(p)).default;
 }
 /**
@@ -116,7 +116,7 @@ export async function get_controller(ctx: any, Module: string, Controller: strin
  * @param Controller 
  */
 export async function get_check_controller(ctx: any, Module: string, Controller: string) {
-    let p = join(ctx.config ? await ctx.config.getAppPath() : 'dist', 'check', Controller) + '.js';
+    let p = join(ctx.config ? await ctx.config.getLibPath() : 'dist', 'check', Controller) + '.js';
     return require(resolve(p)).default;
 }
 /**
@@ -127,7 +127,7 @@ export async function get_check_controller(ctx: any, Module: string, Controller:
  */
 // export async function
 export function install(that: any, koa: any, config: any) {
-    koa.use(config_route);
+    // koa.use(config_route);
     // koa.use();
     koa.use(router);
 }
