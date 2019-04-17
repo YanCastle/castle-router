@@ -68,7 +68,7 @@ export async function controller(ctx: any) {
     // let body = Object.assign(ctx.req.body || {}, ctx.request.body || {})
     let body = ctx.request && ctx.request.body ? ctx.request.body : {};
     if (ctx.req && ctx.req.body) {
-        body = ctx.req.body;
+        body = Object.assign(body, ctx.req.body);
     }
     if (co['_before_' + route.Method] instanceof Function) {
         co['_before_' + route.Method](body, ctx)
