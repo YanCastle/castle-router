@@ -51,8 +51,11 @@ export async function check(ctx: any) {
  * 执行控制器逻辑
  * @param ctx 
  */
-export async function controller(ctx: any) {
-    let route = ctx.route;
+export async function controller(ctx: any, route: { Module: string, Method: string, Path: string, Controller: string } = { Module: '', Method: "", Controller: '', Path: '' }) {
+    // let route = ctx.route;
+    if (!route || route.Controller) {
+        route = ctx.route
+    }
     let c;
     try {
         //调用业务逻辑
