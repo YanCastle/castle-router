@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@ctsy/hook@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@ctsy/hook/-/hook-0.0.1.tgz#9fae6c09330dbc14c070abdb07b52470f49990f7"
+  integrity sha512-Au4kDTDa3qQ0lpCQiHy0PrHVCCttGDEv9j05cxojoqZPmGRqgoTDidj3lq0h85tCIYpzDwVA1AIatsk7bRUR/w==
+
 "@types/lodash@^4.14.119":
   version "4.14.119"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
@@ -38,11 +43,6 @@ bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
   integrity sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=
-
-castle-hook@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/castle-hook/-/castle-hook-1.0.1.tgz#336d3ebac6d1565cfe8e2cb78a7a876493da214f"
-  integrity sha512-ZEuH9UOrc1xpJ7MVW6u5B6CEq+zExe4wdE4H113TlnYSQcpYiEf9WcNtl5wgb7OpdjEjE5pYg/Q//5qw8oTm5A==
 
 colors@1.0.x:
   version "1.0.3"

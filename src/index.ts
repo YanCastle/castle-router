@@ -1,4 +1,13 @@
 import { join, resolve } from 'path';
+import Hook, { HookWhen } from '@ctsy/hook';
+/**
+ * 路由事件注册
+ */
+export enum RouterHook {
+    Controller = '_router/controller',
+
+}
+
 /**
  * 执行route
  * @param ctx 
@@ -57,6 +66,7 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
     if (!route || route.Controller.length == 0) {
         route = ctx.route
     }
+    await Hook.emit(RouterHook.Controller, HookWhen.Before, ctx, route);
     let c;
     try {
         //调用业务逻辑
@@ -89,6 +99,7 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
         if (co['_after_' + route.Method] instanceof Function) {
             co['_after_' + route.Method](body, ctx)
         }
+        await Hook.emit(RouterHook.Controller, HookWhen.After, ctx, d);
         return d;
     } catch (error) {
         throw error;
