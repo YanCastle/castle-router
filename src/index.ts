@@ -5,7 +5,10 @@ import Hook, { HookWhen } from '@ctsy/hook';
  */
 export enum RouterHook {
     Controller = '_router/controller',
-
+    /**
+     * 执行某个方法的事件
+     */
+    Method = '_router'
 }
 
 /**
@@ -66,6 +69,9 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
     if (!route || route.Controller.length == 0) {
         route = ctx.route
     }
+    let hookm: string[] = [RouterHook.Method];
+    if (route.Module) { hookm.push(route.Module) }
+    hookm.push(route.Controller, route.Method)
     await Hook.emit(RouterHook.Controller, HookWhen.Before, ctx, route);
     let c;
     try {
@@ -85,6 +91,7 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
         if (ctx.req && ctx.req.body) {
             body = Object.assign(body, ctx.req.body);
         }
+        await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
         if (co['_before_' + route.Method] instanceof Function) {
             co['_before_' + route.Method](body, ctx)
         }
@@ -99,7 +106,8 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
         if (co['_after_' + route.Method] instanceof Function) {
             co['_after_' + route.Method](body, ctx)
         }
-        await Hook.emit(RouterHook.Controller, HookWhen.After, ctx, d);
+        //调用hook
+        await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
         return d;
     } catch (error) {
         throw error;
