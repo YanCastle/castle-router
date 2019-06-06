@@ -107,7 +107,7 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
             co['_after_' + route.Method](body, ctx)
         }
         //调用hook
-        await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
+        await Hook.emit(hookm.join('/'), HookWhen.After, ctx, d);
         return d;
     } catch (error) {
         throw error;
