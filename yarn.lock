@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@ctsy/hook@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@ctsy/hook/-/hook-0.0.2.tgz#23e35ac73ef7ad7eed830d80edc6ba87d0096a21"
-  integrity sha512-rCC1a+AWTg7iNq3RkF4xas9t0RR9OHunaFu2Z5L98Y1dxyXinxUj+fWcW0cP3NuOI2lDQY4W3vMLWOJ6GSqm8w==
+"@ctsy/hook@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@ctsy/hook/-/hook-0.0.4.tgz#8c306cbb1d923e473672c643a869c9bd55eeb83a"
+  integrity sha512-Fs/9e9O3/MWSvlRdTpqZsvBu3F3i2mrhBMl5bdHGYcqHdY1UOimvb6yI3qiaLWUyd/nqRpex4ID0tmWlk52BLg==
 
 "@types/lodash@^4.14.119":
   version "4.14.119"

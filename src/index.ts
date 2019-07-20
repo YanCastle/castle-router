@@ -28,6 +28,7 @@ export async function router(ctx: any, next: Function) {
                 ctx.body = await controller(ctx)
             }
         } catch (error) {
+            await Hook.emit(RouterHook.Controller, HookWhen.Error, ctx, error)
             ctx.error = error;
         }
     }
@@ -108,6 +109,7 @@ export async function controller(ctx: any, route: { Module: string, Method: stri
         }
         //调用hook
         await Hook.emit(hookm.join('/'), HookWhen.After, ctx, d);
+        await Hook.emit(RouterHook.Controller, HookWhen.After, ctx, d);
         return d;
     } catch (error) {
         throw error;
