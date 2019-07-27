@@ -1,5 +1,6 @@
 import { join, resolve } from 'path';
 import Hook, { HookWhen } from '@ctsy/hook';
+import server from '@ctsy/server'
 /**
  * 路由事件注册
  */
@@ -64,11 +65,16 @@ export async function check(ctx: any) {
  * 执行控制器逻辑
  * @param ctx 
  */
-export async function controller(ctx: any, route: { Module: string, Method: string, Path: string, Controller: string } = { Module: '', Method: "", Controller: '', Path: '' }) {
+export async function controller(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } = { Module: '', Method: "", Controller: '', Path: '' }) {
     // let route = ctx.route;
     let cr = Object.assign(ctx.route);
     if (!route || route.Controller.length == 0) {
         route = ctx.route
+    } else {
+        ctx.route = route;
+        if (ctx.route.Path.length == 0) {
+            ctx.route.Path = server._modules[route.Module || ''] || ''
+        }
     }
     let hookm: string[] = [RouterHook.Method];
     if (route.Module) { hookm.push(route.Module) }
