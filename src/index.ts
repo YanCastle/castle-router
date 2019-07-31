@@ -65,62 +65,71 @@ export async function check(ctx: any) {
  * 执行控制器逻辑
  * @param ctx 
  */
-export async function controller(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } = { Module: '', Method: "", Controller: '', Path: '' }) {
+export async function controller(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } | string = "", data?: any) {
     // let route = ctx.route;
     let cr = Object.assign(ctx.route);
-    if (!route || route.Controller.length == 0) {
-        route = ctx.route
-    } else {
-        ctx.route = route;
-        if (ctx.route.Path.length == 0) {
-            ctx.route.Path = server._modules[route.Module || ''] || ''
-        }
+    if ("string" == typeof route) {
+        ctx.path = route;
+        route = await ctx.config.getController();
     }
-    let hookm: string[] = [RouterHook.Method];
-    if (route.Module) { hookm.push(route.Module) }
-    hookm.push(route.Controller, route.Method)
-    await Hook.emit(RouterHook.Controller, HookWhen.Before, ctx, route);
-    let c;
-    try {
-        //调用业务逻辑
-        c = await get_controller(ctx, route)
-    } catch (error) {
-    }
-    if (!c) {
-        ctx.status = 404;
-        throw new Error("Not Found")
-    }
-    try {
-        let co = new c(ctx)
-        let d = {};
-        // let body = Object.assign(ctx.req.body || {}, ctx.request.body || {})
-        let body = ctx.request && ctx.request.body ? ctx.request.body : {};
-        if (ctx.req && ctx.req.body) {
-            body = Object.assign(body, ctx.req.body);
-        }
-        await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
-        if (co['_before_' + route.Method] instanceof Function) {
-            co['_before_' + route.Method](body, ctx)
-        }
-        if (co[route.Method] instanceof Function) {
-            d = await co[route.Method](body, ctx)
-        } else if (co['__call'] instanceof Function) {
-            d = co['__call'](body, ctx)
+    if ("object" == typeof route) {
+        let { Method, Controller, Module, Path } = route;
+        if (!route || route.Controller.length == 0) {
+            route = ctx.route
         } else {
+            ctx.route = route;
+            if (!ctx.route.Path || ctx.route.Path.length == 0) {
+                ctx.route.Path = server._modules[route.Module || ''] || ''
+            }
+        }
+        let hookm: string[] = [RouterHook.Method];
+        if (Module) { hookm.push(Module) }
+        hookm.push(Controller, Method)
+        await Hook.emit(RouterHook.Controller, HookWhen.Before, ctx, route);
+        let c;
+        try {
+            //调用业务逻辑
+            c = await get_controller(ctx, route)
+        } catch (error) {
+        }
+        if (!c) {
             ctx.status = 404;
             throw new Error("Not Found")
         }
-        if (co['_after_' + route.Method] instanceof Function) {
-            co['_after_' + route.Method](body, ctx)
+        try {
+            let co = new c(ctx)
+            let d = {};
+            // let body = Object.assign(ctx.req.body || {}, ctx.request.body || {})
+            let body = data ? data : ctx.request && ctx.request.body ? ctx.request.body : {};
+            if (ctx.req && ctx.req.body) {
+                body = Object.assign(body, ctx.req.body);
+            }
+            await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
+            if (co['_before_' + Method] instanceof Function) {
+                co['_before_' + Method](body, ctx)
+            }
+            if (co[Method] instanceof Function) {
+                d = await co[Method](body, ctx)
+            } else if (co['__call'] instanceof Function) {
+                d = co['__call'](body, ctx)
+            } else {
+                ctx.status = 404;
+                throw new Error("Not Found")
+            }
+            if (co['_after_' + Method] instanceof Function) {
+                co['_after_' + Method](body, ctx)
+            }
+            //调用hook
+            await Hook.emit(hookm.join('/'), HookWhen.After, ctx, d);
+            await Hook.emit(RouterHook.Controller, HookWhen.After, ctx, d);
+            return d;
+        } catch (error) {
+            throw error;
+        } finally {
+            ctx.route = cr;
         }
-        //调用hook
-        await Hook.emit(hookm.join('/'), HookWhen.After, ctx, d);
-        await Hook.emit(RouterHook.Controller, HookWhen.After, ctx, d);
-        return d;
-    } catch (error) {
-        throw error;
-    } finally {
-        ctx.route = cr;
+    } else {
+        throw new Error('Router Error')
     }
 }
 // /**
