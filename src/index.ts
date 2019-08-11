@@ -1,6 +1,7 @@
 import { join, resolve } from 'path';
 import Hook, { HookWhen } from '@ctsy/hook';
-import server from '@ctsy/server'
+const server: any = require('@ctsy/server').default
+if (!server._prefix) { server._prefix = {} }
 /**
  * 路由事件注册
  */
@@ -105,6 +106,10 @@ export async function controller(ctx: any, route: { Module?: string, Method: str
             let body = data ? data : ctx.request && ctx.request.body ? ctx.request.body : {};
             if (ctx.req && ctx.req.body) {
                 body = Object.assign(body, ctx.req.body);
+            }
+            if (Module && server._prefix[Module]) {
+                if (c._prefix == "")
+                    c._prefix = server._prefix[Module]
             }
             await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
             if (co['_before_' + Method] instanceof Function) {
