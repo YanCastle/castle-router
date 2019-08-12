@@ -108,8 +108,8 @@ export async function controller(ctx: any, route: { Module?: string, Method: str
                 body = Object.assign(body, ctx.req.body);
             }
             if (Module && server._prefix[Module]) {
-                if (c._prefix == "")
-                    c._prefix = server._prefix[Module]
+                if (!co._prefix)
+                    co._prefix = server._prefix[Module]
             }
             await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
             if (co['_before_' + Method] instanceof Function) {
