@@ -1,6 +1,6 @@
 {
   "name": "@ctsy/router",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -16,15 +16,15 @@
     "prepublish": "rm -rf dist && tsc"
   },
   "dependencies": {
-    "@ctsy/hook": "~0.0.4",
-    "@ctsy/server": "~1.0.5",
+    "@ctsy/hook": "^0.0.4",
+    "@ctsy/server": "^1.0.5",
     "koa-better-http-proxy": "^0.2.4",
-    "lodash": "~4.17.11",
+    "lodash": "^4.17.11",
     "mz": "^2.7.0"
   },
   "devDependencies": {
-    "@types/lodash": "~4.14.119",
-    "@types/mz": "~0.0.32",
-    "@types/node": "~10.12.10"
+    "@types/lodash": "^4.14.119",
+    "@types/mz": "^0.0.32",
+    "@types/node": "^10.12.10"
   }
 }
