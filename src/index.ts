@@ -112,6 +112,9 @@ export async function controller(ctx: any, route: { Module?: string, Method: str
                     co._prefix = server._prefix[Module]
             }
             await Hook.emit(hookm.join('/'), HookWhen.Before, ctx, body);
+            if (co['_init_'] instanceof Function) {
+                await co['_init_'](body, ctx);
+            }
             if (co['_before_' + Method] instanceof Function) {
                 co['_before_' + Method](body, ctx)
             }
