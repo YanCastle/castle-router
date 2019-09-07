@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@ctsy/hook@^0.0.5":
+"@ctsy/hook@^0", "@ctsy/hook@^0.0.5":
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@ctsy/hook/-/hook-0.0.5.tgz#68c2e58f36a0d49c5b643dc0cd6c4c573fd92f89"
   integrity sha512-sBib0ahrQIQbttKgAuye/HmGLGOp2IV9boXBwbvMeEmKw6zhpkFPNUiq7UD+045+bcNyTIeYvJoKFwQAK7zQ/Q==
 
-"@ctsy/server@^1.0.8":
+"@ctsy/server@^1.0":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@ctsy/server/-/server-1.0.8.tgz#0a19f43a6eb82797ac2b4f4611901d86cde5c5c3"
   integrity sha512-FnNFYNmKeXiHs7019dkrYe87kdiGzMcEMObB/D+Bl4PK+J87cRikvvKLeuAXp+QKAbTy8iG1GPDLAhQkrB4mRQ==
@@ -108,7 +108,7 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
-"@types/lodash@^4.14.119":
+"@types/lodash@^4":
   version "4.14.138"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.138.tgz#34f52640d7358230308344e579c15b378d91989e"
   integrity sha512-A4uJgHz4hakwNBdHNPdxOTkYmXNgmUAKLbXZ7PKGslgeV0Mb8P3BlbYfPovExek1qnod4pDfRbxuzcVs3dlFLg==
@@ -118,7 +118,7 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.1.tgz#dc488842312a7f075149312905b5e3c0b054c79d"
   integrity sha512-FwI9gX75FgVBJ7ywgnq/P7tw+/o1GUbtP0KzbtusLigAOgIgNISRK0ZPl4qertvXSIE8YbsVJueQ90cDt9YYyw==
 
-"@types/mz@^0.0.32":
+"@types/mz@^0":
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/@types/mz/-/mz-0.0.32.tgz#e8248b4e41424c052edc1725dd33650c313a3659"
   integrity sha512-cy3yebKhrHuOcrJGkfwNHhpTXQLgmXSv1BX+4p32j+VUQ6aP2eJ5cL7OvGcAQx75fCTFaAIIAKewvqL+iwSd4g==
@@ -130,7 +130,7 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.3.tgz#27b3f40addaf2f580459fdb405222685542f907a"
   integrity sha512-3SiLAIBkDWDg6vFo0+5YJyHPWU9uwu40Qe+v+0MH8wRKYBimHvvAOyk3EzMrD/TrIlLYfXrqDqrg913PynrMJQ==
 
-"@types/node@^10.12.10":
+"@types/node@^10":
   version "10.14.17"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.17.tgz#b96d4dd3e427382482848948041d3754d40fd5ce"
   integrity sha512-p/sGgiPaathCfOtqu2fx5Mu1bcjuP8ALFg4xpGgNkcin7LwRyzUKniEHBKdcE1RPsenq5JVPIpMTJSygLboygQ==
@@ -959,7 +959,7 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==
 
-koa-better-http-proxy@^0.2.4:
+koa-better-http-proxy@^0.2:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/koa-better-http-proxy/-/koa-better-http-proxy-0.2.4.tgz#613ea1d52623d3ef02fd64528ce042c1f6659cbb"
   integrity sha1-YT6h1SYj0+8C/WRSjOBCwfZlnLs=
@@ -1051,7 +1051,7 @@ koa@^2.6.2:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-lodash@^4.17.11:
+lodash@^4:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -1176,7 +1176,7 @@ multiparty@^4.1.3:
     safe-buffer "5.1.2"
     uid-safe "2.1.5"
 
-mz@^2.7.0:
+mz@^2.7, mz@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/mz/-/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"
   integrity sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==
