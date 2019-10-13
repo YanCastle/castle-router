@@ -71,6 +71,9 @@ export async function check(ctx: any) {
  */
 export async function controller(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } | string = "", data?: any) {
     // let route = ctx.route;
+    if (!ctx.route) {
+        await ctx.config.getController();
+    }
     let cr = Object.assign(ctx.route);
     if ("string" == typeof route && route.length > 0) {
         ctx.path = route;
