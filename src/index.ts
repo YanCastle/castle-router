@@ -10,7 +10,8 @@ export enum RouterHook {
     /**
      * 执行某个方法的事件
      */
-    Method = '_router'
+    Method = '_router',
+    Router = "_router/r"
 }
 
 /**
@@ -22,6 +23,7 @@ export async function router(ctx: any, next: Function) {
     // await timeout(5000)
     if ('OPTIONS' != ctx.method) {
         try {
+            await Hook.emit(RouterHook.Router, HookWhen.Before, ctx, {})
             if (ctx.config && ctx.config.sendFile) {
                 await ctx.config.getStaticFile();
             } else {
@@ -29,6 +31,7 @@ export async function router(ctx: any, next: Function) {
                 await check(ctx);
                 ctx.body = await controller(ctx)
             }
+            await Hook.emit(RouterHook.Router, HookWhen.After, ctx, {})
         } catch (error) {
             await Hook.emit(RouterHook.Controller, HookWhen.Error, ctx, error)
             ctx.error = error;
