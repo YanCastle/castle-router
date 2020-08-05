@@ -29,7 +29,10 @@ export async function router(ctx: any, next: Function) {
             } else {
                 // await timeout
                 await check(ctx);
-                ctx.body = await controller(ctx)
+                let d = await controller(ctx)
+                if (d !== undefined) {
+                    ctx.body = d;
+                }
             }
             await Hook.emit(RouterHook.Router, HookWhen.After, ctx, {})
         } catch (error) {
