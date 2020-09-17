@@ -125,18 +125,18 @@ export async function controller(ctx: any, route: { Module?: string, Method: str
                 await co['_init_'](body, ctx);
             }
             if (co['_before_' + Method] instanceof Function) {
-                co['_before_' + Method](body, ctx)
+                await co['_before_' + Method](body, ctx)
             }
             if (co[Method] instanceof Function) {
                 d = await co[Method](body, ctx)
             } else if (co['__call'] instanceof Function) {
-                d = co['__call'](body, ctx)
+                d = await co['__call'](body, ctx)
             } else {
                 ctx.status = 404;
                 throw new Error("Not Found")
             }
             if (co['_after_' + Method] instanceof Function) {
-                co['_after_' + Method](body, ctx)
+                await co['_after_' + Method](body, ctx)
             }
             //调用hook
             await Hook.emit(hookm.join('/'), HookWhen.After, ctx, d);
