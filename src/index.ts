@@ -72,7 +72,7 @@ export async function check(ctx: any) {
  * 执行控制器逻辑
  * @param ctx 
  */
-export async function controller(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } | string = "", data?: any) {
+export async function controller<T>(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } | string = "", data?: any): Promise<T> {
     // let route = ctx.route;
     if (!ctx.route) {
         await ctx.config.getController();
@@ -141,7 +141,7 @@ export async function controller(ctx: any, route: { Module?: string, Method: str
             //调用hook
             await Hook.emit(hookm.join('/'), HookWhen.After, ctx, d);
             await Hook.emit(RouterHook.Controller, HookWhen.After, ctx, d);
-            return d;
+            return <any>d;
         } catch (error) {
             throw error;
         } finally {
