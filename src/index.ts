@@ -23,6 +23,9 @@ export async function router(ctx: any, next: Function) {
     // await timeout(5000)
     if ('OPTIONS' != ctx.method) {
         try {
+            if (!ctx.route) {
+                ctx.route = await ctx.config.getController();
+            }
             await Hook.emit(RouterHook.Router, HookWhen.Before, ctx, {})
             if (ctx.config && ctx.config.sendFile) {
                 await ctx.config.getStaticFile();
@@ -74,9 +77,6 @@ export async function check(ctx: any) {
  */
 export async function controller<T>(ctx: any, route: { Module?: string, Method: string, Path?: string, Controller: string } | string = "", data?: any): Promise<T> {
     // let route = ctx.route;
-    if (!ctx.route) {
-        await ctx.config.getController();
-    }
     let cr = Object.assign(ctx.route);
     if ("string" == typeof route && route.length > 0) {
         ctx.path = route;
