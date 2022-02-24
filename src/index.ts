@@ -103,6 +103,7 @@ export async function controller<T>(ctx: any, route: { Module?: string, Method: 
             //调用业务逻辑
             c = await get_controller(ctx, route)
         } catch (error) {
+            console.error(error)
         }
         if (!c) {
             ctx.status = 404;
